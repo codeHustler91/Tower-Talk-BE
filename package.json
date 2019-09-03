@@ -1,6 +1,9 @@
 {
   "name": "tower-talk-node-be",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.4.0"
+  },
   "description": "node backend",
   "main": "app.js",
   "scripts": {
@@ -8,5 +11,8 @@
     "test": "mocha"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
