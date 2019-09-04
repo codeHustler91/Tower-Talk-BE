@@ -1,5 +1,4 @@
-
-exports.up = function(knex) {
+exports.up = function(knex, promise) {
     return knex.schema.createTable('students', (student) => {
         student.increments('id')
         student.string('name')
