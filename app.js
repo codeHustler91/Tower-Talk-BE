@@ -8,6 +8,7 @@ app.listen(port, () => {
     console.log(`listenting on port ${port}!`)
 })
 
+// routes
 // instructors
 app.get('/instructors', (request, response) => {
     queries.listAllInstructors().then(instructors => response.send(instructors))
