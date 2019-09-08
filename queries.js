@@ -10,6 +10,12 @@ module.exports = {
             .where('id', id)
             .delete()
     },
+    updateInstructor(id, instructor){
+        console.log(instructor)
+        return database('instructors')
+            .where('id', id)
+            .update(instructor)
+    },
     // students table
     listAllStudents(){
         return database('students')
@@ -18,6 +24,11 @@ module.exports = {
         return database('students')
             .where('id', id)
             .delete()
+    },
+    updateStudent(id, student){
+        return database('students')
+            .where('id', id)
+            .update(student)
     },
     // materials table
     listAllMaterials(){
@@ -39,6 +50,11 @@ module.exports = {
         return database('instructor_notes')
             .where('material_id', id)
     },
+    updateInstructorNote(id, note){
+        return database('instructor_notes')
+            .where('id', id)
+            .update(note)
+    },
     deleteInstructorNotes(id){
         return database('instructor_notes')
             .where('instructor_id', id)
@@ -58,6 +74,11 @@ module.exports = {
         console.log('show student notes for material', id)
         return database('student_notes')
            .where('material_id', id)
+    },
+    updateStudentNote(id, note){
+        return database('student_notes')
+            .where('id', id)
+            .update(note)
     },
     deleteStudentNotes(id){
         return database('student_notes')

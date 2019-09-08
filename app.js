@@ -19,6 +19,10 @@ app.get('/instructors', (request, response) => {
     queries.listAllInstructors()
         .then(instructors => response.send(instructors))
 })
+app.put('/updateInstructor/:id', (request, response) => {
+    queries.updateInstructor(request.params.id, request.body)
+        .then(instructor => response.json(instructor))
+})
 app.delete('/instructors/:id', (request, response) => {
     queries.deleteInstructorNotes(request.params.id)
         .then(res => queries.deleteInstructor(request.params.id))
