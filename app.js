@@ -15,35 +15,56 @@ app.listen(port, () => {
 
 // routes
 // instructors
+app.post('/instructors', (request, response) => {
+    console.log('route', request.body)
+    queries.createInstructor(request.body)
+        .then(instructor => response.send(instructor))
+})
+app.get('/instructor/:email', (request, response) => {
+    queries.showInstructor(request.params.email)
+        .then(instructor => response.send(instructor))
+})
 app.get('/instructors', (request, response) => {
-    queries.listAllInstructors()
+    queries.showAllInstructors()
         .then(instructors => response.send(instructors))
 })
-app.put('/updateInstructor/:id', (request, response) => {
+app.put('/instructor/:id', (request, response) => {
     queries.updateInstructor(request.params.id, request.body)
-        .then(instructor => response.json(instructor))
+        .then(instructor => response.send(instructor))
 })
-app.delete('/instructors/:id', (request, response) => {
+app.delete('/instructor/:id', (request, response) => {
     queries.deleteInstructorNotes(request.params.id)
         .then(res => queries.deleteInstructor(request.params.id))
         .then(response.sendStatus(204))
 })
 // students
+app.post('/students', (request, response) => {
+    queries.createStudent(request.body)
+        .then(student => response.send(student))
+})
+app.get('/student/:email', (request, response) => {
+    queries.showStudent(request.params.email)
+        .then(student => response.send(student))
+})
 app.get('/students', (request, response) => {
-    queries.listAllStudents()
+    queries.showAllStudents()
         .then(students => response.send(students))
 })
-app.delete('/students/:id', (request, response) => {
+app.put('/student/:id', (request, response) => {
+    queries.updateStudent(request.body)
+        .then(student => response.send(student))
+})
+app.delete('/student/:id', (request, response) => {
     queries.deleteStudentNotes(request.params.id)
         .then(res => queries.deleteStudent(request.params.id))
         .then(response.sendStatus(204))
 })
 // materials
 app.get('/materials', (request, response) => {
-    queries.listAllMaterials()
+    queries.showAllMaterials()
         .then(materials => response.send(materials))
 })
-app.delete('/materials/:id', (request, response) => {
+app.delete('/material/:id', (request, response) => {
     queries.deleteAllStudentNotesForMaterial(request.params.id)
         .then(res => queries.deleteAllInstructorNotesForMaterial(request.params.id))
         .then(res => queries.deleteMaterial(request.params.id))
@@ -51,27 +72,27 @@ app.delete('/materials/:id', (request, response) => {
 })
 // instructor notes
 app.get('/instructor_notes', (request, response) => {
-    queries.listAllInstructorNotes()
+    queries.showAllInstructorNotes()
         .then(instructorNote => response.send(instructorNote))
 })
-app.get('/instructor_notes_for_material/:id', (request, response) => {
+app.get('/instructorNotesForMaterial/:id', (request, response) => {
     queries.showAllInstructorNotesForMaterial(request.params.id)
-        .then(instructorNote => response.send(instructorNote))
+        .then(instructorNotes => response.send(instructorNotes))
 })
-app.delete('/instructor_notes/:id', (request, response) => {
+app.delete('/instructorNote/:id', (request, response) => {
     queries.deleteInstructorNote(request.params.id)
         .then(response.sendStatus(204))
 })
 // student notes
-app.get('/student_notes', (request, response) => {
-    queries.listAllStudentNotes()
-        .then(studentNote => response.send(studentNote))
+app.get('/studentNotes', (request, response) => {
+    queries.showAllStudentNotes()
+        .then(studentNotes => response.send(studentNotes))
 })
-app.get('/student_notes_for_material/:id', (request, response) => {
+app.get('/studentNotesForMaterial/:id', (request, response) => {
     queries.showAllStudentNotesForMaterial(request.params.id)
-        .then(studentNote => response.send(studentNote))
+        .then(studentNotes => response.send(studentNotes))
 })
-app.delete('/student_notes/:id', (request, response) => {
-    queries.deleteStudentNote(request.params.id)
+app.delete('/studentNotes/:id', (request, response) => {
+    queries.deleteStudentNotes(request.params.id)
         .then(response.sendStatus(204))
 })

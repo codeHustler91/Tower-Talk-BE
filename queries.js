@@ -2,51 +2,75 @@ const database = require('./database-connection')
 
 module.exports = {
     // instructors
-    listAllInstructors(){
+    createInstructor(instructor){
         return database('instructors')
+            .insert(instructor)
+            .returning('*')
+    },
+    showInstructor(email){
+        return database('instructors')
+            .where('email', email)
+    },
+    showAllInstructors(){
+        return database('instructors')
+    },
+    updateInstructor(id, instructor){
+        return database('instructors')
+            .where('id', id)
+            .update(instructor)
     },
     deleteInstructor(id){
         return database('instructors')
             .where('id', id)
             .delete()
     },
-    updateInstructor(id, instructor){
-        console.log(instructor)
-        return database('instructors')
-            .where('id', id)
-            .update(instructor)
-    },
     // students table
-    listAllStudents(){
+    createStudent(student){
         return database('students')
+            .insert(student)
+            .returning('*')
     },
-    deleteStudent(id){
+    showStudent(email){
         return database('students')
-            .where('id', id)
-            .delete()
+            .where('email', email)
+    },
+    showAllStudents(){
+        return database('students')
     },
     updateStudent(id, student){
         return database('students')
             .where('id', id)
             .update(student)
     },
+    deleteStudent(id){
+        return database('students')
+            .where('id', id)
+            .delete()
+    },
     // materials table
-    listAllMaterials(){
+    createMaterial(material){
+        return database('materials')
+            .insert(material)
+            .returning('*')
+    },
+    showAllMaterials(){
         return database('materials')
     },
     deleteMaterial(id){
-        console.log('delete material', id)
         return database('materials')
             .where('id', id)
             .delete()
     },
-
     // instructor notes table
-    listAllInstructorNotes(){
+    createInstructorNote(note){
+        return database('instructor_notes')
+            .insert(note)
+            .returning('*')
+    },
+    showAllInstructorNotes(){
         return database('instructor_notes')
     },
     showAllInstructorNotesForMaterial(id){
-        console.log('show instructor notes for material', id)
         return database('instructor_notes')
             .where('material_id', id)
     },
@@ -61,17 +85,20 @@ module.exports = {
             .delete()
     },
     deleteAllInstructorNotesForMaterial(id){
-        console.log('delete instructor notes for material', id)
         return database('instructor_notes')
             .where('material_id', id)
             .delete()
     },
     // student notes table
-    listAllStudentNotes(){
+    createStudentNote(note){
+        return database('student_notes')
+            .insert(note)
+            .returning('*')
+    },
+    showAllStudentNotes(){
         return database('student_notes')
     },
     showAllStudentNotesForMaterial(id){
-        console.log('show student notes for material', id)
         return database('student_notes')
            .where('material_id', id)
     },
@@ -86,7 +113,6 @@ module.exports = {
             .delete()
     },
     deleteAllStudentNotesForMaterial(id){
-        console.log('delete student note for material', id)
         return database('student_notes')
             .where('material_id', id)
             .delete()
