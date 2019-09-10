@@ -1,4 +1,5 @@
 const express = require('express')
+let socket = require('socket.io')
 const app = express()
 const queries = require('./queries')
 var cors = require('cors')
@@ -9,9 +10,25 @@ app.use(bodyParser())
 
 const port = process.env.PORT || 5000
 
-app.listen(port, () => {
+let server = app.listen(port, () => {
     console.log(`listenting on port ${port}!`)
 })
+
+// socket.io
+// static files
+app.use(express.static('./public'))
+
+// socket setup
+let io = socket(server);
+
+io.on('connection', function(socket){
+    console.log('made socket connection', socket.id)
+
+    socket.on('chat', function(data){
+        io.sockets.emit('chat', data)
+    })
+})
+
 
 // routes
 // instructors
