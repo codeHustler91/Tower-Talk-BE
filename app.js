@@ -79,6 +79,10 @@ app.delete('/student/:id', (request, response) => {
         .then(response.sendStatus(204))
 })
 // materials
+app.post('/materials', (request, response) => {
+    queries.createMaterial(request.body)
+        .then(material => response.send(material))
+})
 app.get('/materials', (request, response) => {
     queries.showAllMaterials()
         .then(materials => response.send(materials))
