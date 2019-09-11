@@ -14,26 +14,23 @@ let server = app.listen(port, () => {
     console.log(`listenting on port ${port}!`)
 })
 
-// socket.io
-// static files
-app.use(express.static('./public'))
-
 // socket setup
+let room = 'abc123'
 let io = socket(server);
 
 io.on('connection', function(socket){
     console.log('made socket connection', socket.id)
 
-    socket.on('chat', function(data){
-        io.sockets.emit('chat', data)
+    socket.on('room', function(room){
+        socket.join(room)
     })
-    
+    socket.on('chat', function(data){
+        io.sockets.in(room).emit('chat', data)
+    })
     socket.on('typing', function(data){
         socket.broadcast.emit('typing', data)
     })
 })
-
-
 
 // routes
 // instructors
